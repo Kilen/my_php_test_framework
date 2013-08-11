@@ -1,10 +1,5 @@
 <?php
 
-define('IN_ECS', true);
-
-require(dirname(__FILE__) . '/includes/init.php');
-require_once(dirname(__FILE__) . '/file_oper.php');
-
 define("LF", "<br />");
 class Test
 {
@@ -60,7 +55,7 @@ class TestFoo extends Test
 
 function test_all_test_example($tester)
 {
-    $all_test_examples = get_test_examples($tester);
+    $all_test_examples = collect_strings_with_specific_prefix(get_class_methods($tester), "test_");
     $number = count($all_test_examples);
     echo "You have $number test example:" . LF;
 
@@ -85,23 +80,22 @@ function test_all_test_example($tester)
     echo LF . LF . "RESULT: $number example(s): succeed($success_counter), fail($failure_counter)" . LF; 
 }
 
-function get_test_examples($tester)
+function collect_strings_with_specific_prefix($all_strings, $prefix)
 {
-    $all_public_methods = get_class_methods($tester);
-    $test_examples = [];
-    foreach ($all_public_methods as $method) {
-        if(is_begin_with("test_", $method))
+    $expected_strings = [];
+    foreach ($all_strings as $string) {
+        if(is_begin_with($prefix, $string))
         {
-            $test_examples[] = $method;
+            $expected_strings[] = $string;
         }
     }
-    return $test_examples;
+    return $expected_strings;
 }
 
-function is_begin_with($prefix, $method_name)
+function is_begin_with($prefix, $string)
 {
-    $method_name_prefix = substr($method_name, 0, strlen($prefix));
-    return $method_name_prefix === $prefix;
+    $string_prefix = substr($string, 0, strlen($prefix));
+    return $string_prefix === $prefix;
 }
 
 $tester = new TestFoo;
