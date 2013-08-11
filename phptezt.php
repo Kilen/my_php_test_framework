@@ -1,7 +1,7 @@
 <?php
 
 define("LF", "<br />");
-class Test
+class PhpTezt
 {
     public $is_successful;
     public $error_message;
@@ -44,7 +44,7 @@ class Foo
     }
 }
 
-class TestFoo extends Test
+class TestFoo extends PhpTezt
 {
     function test_file_oper_get_real_size()
     {
