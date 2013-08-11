@@ -57,7 +57,7 @@ function calculate_test_example_number($all_classes)
     return $counter;
 }
 
-require_once("phptezt.php");
+require_once("phptezt/phptezt.php");
 //require all the php files in phptezt/
 foreach (glob("phptezt/*.php") as $filename)
 {
